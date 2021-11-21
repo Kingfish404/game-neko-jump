@@ -1,6 +1,6 @@
 # Neko Jump
 
-A Game Power by react and matter.js
+A Game Power by React and Matter.js
 
 ![](images/demo.png)
 
