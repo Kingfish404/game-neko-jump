@@ -96,11 +96,14 @@ function App() {
       const box = Bodies.rectangle(
         cw + 100,
         map[index]
-        , 100, 20, {
+        , 100, 25, {
         isStatic: true,
         friction: 0,
         frictionStatic: 0,
         frictionAir: 0,
+        render: {
+          lineWidth: 0
+        }
       });
       obstacles.push(box);
       Body.setVelocity(box, { x: -100, y: 0 });
@@ -111,13 +114,19 @@ function App() {
         setIsStart(false);
         setIsDead(true);
       }
-      if (player.current.position.x < ch / 2) {
-        Body.setVelocity(player.current, { x: 1, y: 0 });
-      }
     }, 700);
+
+    const gameloopPlayer = setInterval(() => {
+      if (player.current.position.x < cw * 0.45) {
+        Body.setVelocity(player.current, { x: 1, y: player.current.velocity.y });
+      } else if (player.current.position.x > cw * 0.85) {
+        Body.setVelocity(player.current, { x: -0.25, y: player.current.velocity.y });
+      }
+    }, 100);
 
     if (!isStart) {
       clearInterval(gameloop);
+      clearInterval(gameloopPlayer);
     }
 
     Events.on(e, 'beforeUpdate', () => {
